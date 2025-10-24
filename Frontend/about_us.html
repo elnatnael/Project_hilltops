@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Hilltops Academy</title>
+  <link rel="stylesheet" href="/Public/css/styles.css">
+  <style>
+    
+    /* About Page Specific Styles */
+    .about-page {
+      background: #f8f9fa;
+      
+    }
+    
+    .about-hero {
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.9) 0%, rgba(231, 83, 15, 0.9) 100%);
+      color: white;
+      padding: 150px 2rem 80px;
+      text-align: center;
+      margin-top: 70px;
+      height: 80vh;
+    }
+    
+    .about-hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .about-hero p {
+      font-size: 1.3rem;
+      max-width: 800px;
+      margin: 0 auto;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+    
+    .about-content {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+    
+    .about-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    
+    .about-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .about-card h3 {
+      color: #2c3e50;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .about-card p {
+      color: #666;
+      line-height: 1.7;
+    }
+    
+    .history-section {
+      background: white;
+      padding: 4rem 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin-bottom: 4rem;
+    }
+    
+    .history-timeline {
+      position: relative;
+      max-width: 800px;
+      margin: 3rem auto 0;
+    }
+    
+    .timeline-item {
+      padding: 2rem;
+      margin: 2rem 0;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border-left: 4px solid #e74c3c;
+    }
+    
+    .timeline-year {
+      font-weight: bold;
+      color: #e74c3c;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .values-section {
+      text-align: center;
+      margin-bottom: 4rem;
+      h2{
+        color: #f8f9fa;
+        text-transform: capitalize;
+      }
+    }
+
+    
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .value-item {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    }
+    
+    .value-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #e74c3c;
+    }
+    .value_p{
+      color: #f8f9fa;
+    }
+    
+    .stats-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 4rem 2rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .stat-item h3 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    
+    .leadership-section {
+      margin-bottom: 4rem;
+      text-align: center;
+     
+      
+      .h2{
+        color: #f8f9fa;
+      }
+     
+    }
+    
+    
+    .leadership-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .leader-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .leader-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      background: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      color: #e74c3c;
+    }
+    
+    .leader-role {
+      color: #e74c3c;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    /* School Compound Slider Styles */
+    .school-compound {
+      padding: 4rem 2rem;
+      background: white;
+    }
+    
+    .school-compound h2 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #2c3e50;
+    }
+    
+    .image-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+      height: 500px;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    
+    .compound-image,
+    .building-image,
+    .playground-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: translateX(100%);
+      transition: all 0.8s ease-in-out;
+    }
+    
+    .compound-image.active {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    
+    .compound-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      pointer-events: none;
+      padding: 0 20px;
+      z-index: 10;
+    }
+    
+    .compound-arrow {
+      background: rgba(52, 152, 219, 0.9);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      pointer-events: all;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .compound-arrow:hover {
+      background: rgba(41, 128, 185, 1);
+      transform: scale(1.1);
+    }
+    
+    .compound-controls {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      z-index: 10;
+    }
+    
+    .compound-indicators {
+      display: flex;
+      gap: 8px;
+    }
+    
+    .compound-indicator {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      border: 2px solid white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .compound-indicator.active {
+      background: white;
+      transform: scale(1.2);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .about-hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .about-hero p {
+        font-size: 1.1rem;
+      }
+      
+      .about-grid,
+      .values-grid,
+      .stats-grid,
+      .leadership-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .image-content {
+        height: 400px;
+      }
+    }
+
+    .header-container1{
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        max-width: 12000px;
+        margin: 0 auto;
+        width: 100%;
+        overflow: visible; /* Changed from hidden */
+        position: relative; /* Added for dropdown positioning */
+
+}  
+  </style>
+</head>
+<body class="about-page">
+  <script src="/Public/js/main.js" defer></script>
+  <header>
+    <div class="header-container1">
+      <div class="logo-container">
+        <img src="/Public/images/Screenshot_2025-10-20_at_3.04.19_PM-removebg-preview.png" alt="Hilltops Academy Logo" class="logo">
+      </div>
+      
+      <input type="checkbox" id="menuToggle" class="menu-toggle">
+      <label for="menuToggle" class="hamburger-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      
+      <div class="nav-links">
+        <a href="/Frontend/index.html">Home</a>
+        <a href="/Frontend/about_us.html" class="active">About us</a>
+        <div class="dropdown">
+          <a href="#">Access Portal</a>
+          <div class="dropdown-content">
+            <a href="#">Student Portal</a>
+            <a href="#">Staff Portal</a>
+          </div>
+        </div>
+        <a href="/Frontend/contact_us.html">contact us</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="about-hero">
+    <div class="hero-content">
+      <h1>About Hilltops Academy</h1>
+      <p>Here at Hilltops Academy, we aim to equip our students for a strong, happy, successful future. A key part of their education is our CHARACTER COUNTS Program, through which the children learn to live through these key values. These are: Trustworthiness, Respect Responsibility, Fairness, Caring and Citizenship.</p>
+    </div>
+  </section>
+
+  <section class="about-content">
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>GOVERNANCE</h3>
+        <p>Hilltops Academy is fully accredited by the concerned organ. The school administrators are visionary, active, skilled and professionally competent. The Administration is comprised of a Managing Director, a Superintendent, Academic Quality Assurances, Principals, Supervisors and others. 
+          The school is Consisted of well- trained, certified professional educators. Faculty members are selected from among the best candidates in the highly competitive teaching market. 
+          In most cases, our teachers have several years of experience in teaching and are well-aware of the special challenges.</p>
+      </div>
+      <div class="about-card">
+        <h3>LIFE SKILLS</h3>
+        <p>Our curriculum focuses not only the acquisition of Knowledge, but also on the development of thinking and problem solving, as well as life skills Therefore different extracurricular activities are designed to meet learners personal, social and educational needs. We are moving toward placing each pupil and his or her learning needs at the heart of all that we seek to do. Our job here is to be creative and to help others to be creative too. This life skills program is designed to help students figure out what type of career they want to pursue and how to start preparing for it.</p>
+      </div>
+      
+      <div class="about-card">
+        <h3>PHILOSOPHY</h3>
+         <ul>
+          <li>To be recognized by the success of our students in achieving their personal goals.</li>
+          <li>To make Students development the center of all school decisions</li>
+          <li>To aspire to the highest internationally recognized performance standards.</li>
+          <li>To celebrate a culture based on internationalism</li>
+          <li>To build and celebrate, our diversity of cultures, backgrounds and perspective</li>
+          <li>To create a learning environment that will positively contribute to international and local communities.</li>
+         </ul>
+      </div>
+      
+      
+    </div>
+
+    <div class="history-section">
+      <h2>Our History & Legacy</h2>
+      <p>Founded in 1995, Hilltops Academy has grown from a small community school to a leading educational institution recognized for academic excellence and innovative teaching methods.</p>
+      
+      <div class="history-timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">1995</div>
+          <p>Hilltops Academy founded with just 50 students and 5 teachers, focusing on personalized education.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">2005</div>
+          <p>Expanded campus facilities and introduced the International Baccalaureate program, becoming a pioneer in global education.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">2015</div>
+          <p>Celebrated 20 years of excellence with over 1,000 alumni making impacts in various fields worldwide.</p>
+        </div>
+        
+        <div class="timeline-item">
+          <div class="timeline-year">2020</div>
+          <p>Implemented state-of-the-art digital learning platforms while maintaining our commitment to personalized attention.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="values-section">
+      <h2>Our Core Values</h2>
+      <p class="value_p">These principles guide everything we do at Hilltops Academy</p>
+      
+      <div class="values-grid">
+        <div class="value-item">
+          <div class="value-icon">★</div>
+          <h3>Excellence</h3>
+          <p>Striving for the highest standards in academics, character, and personal development.</p>
+        </div>
+        
+        <div class="value-item">
+          <div class="value-icon">❤️</div>
+          <h3>Integrity</h3>
+          <p>Building trust through honesty, responsibility, and ethical behavior in all actions.</p>
+        </div>
+        
+        <div class="value-item">
+          <div class="value-icon">🌍</div>
+          <h3>Community</h3>
+          <p>Fostering a supportive environment where everyone belongs and contributes.</p>
+        </div>
+        
+        <div class="value-item">
+          <div class="value-icon">🚀</div>
+          <h3>Innovation</h3>
+          <p>Embracing new ideas and technologies to enhance learning experiences.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-section">
+      <h2>By The Numbers</h2>
+      <p>Our commitment to excellence reflected in our achievements</p>
+      
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>95%</h3>
+          <p>University Acceptance Rate</p>
+        </div>
+        
+        <div class="stat-item">
+          <h3>25+</h3>
+          <p>Years of Excellence</p>
+        </div>
+        
+        <div class="stat-item">
+          <h3>15:1</h3>
+          <p>Student-Teacher Ratio</p>
+        </div>
+        
+        <div class="stat-item">
+          <h3>30+</h3>
+          <p>Extracurricular Programs</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="leadership-section">
+      <h2 class="h2">Meet Our Leadership</h2>
+      <p class="h2">Dedicated professionals committed to educational excellence</p>
+      
+      <div class="leadership-grid">
+        <div class="leader-card">
+          <div class="leader-image">👨‍🏫</div>
+          <h3>Dr. Michael Roberts</h3>
+          <div class="leader-role">Head of School</div>
+          <p>With over 20 years in educational leadership, Dr. Roberts champions innovative learning approaches.</p>
+        </div>
+        
+        <div class="leader-card">
+          <div class="leader-image">👩‍🏫</div>
+          <h3>Sarah Johnson</h3>
+          <div class="leader-role">Academic Director</div>
+          <p>Leading curriculum development and ensuring academic excellence across all departments.</p>
+        </div>
+        
+        <div class="leader-card">
+          <div class="leader-image">👨‍💼</div>
+          <h3>David Chen</h3>
+          <div class="leader-role">Student Affairs Director</div>
+          <p>Focused on student wellbeing, extracurricular programs, and community building.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="school-compound">
+    <h2>Our Compound</h2>
+    <div class="image-content">
+      <img src="/Public/images/hillpic.jpeg" alt="Hilltops Academy School Compound" class="compound-image active">
+      <img src="/Public/images/hillpic.jpeg" alt="Hilltops Academy School Building" class="building-image">
+      <img src="/Public/images/hillpic.jpeg" alt="Hilltops Academy School Playground" class="playground-image">
+      <img src="/Public/images/hillpic.jpeg" alt="Hilltops Academy School Library" class="playground-image">
+    </div>
+    
+    <div class="compound-nav">
+      <button class="compound-arrow prev">←</button>
+      <button class="compound-arrow next">→</button>
+    </div>
+    
+    <div class="compound-controls">
+      <div class="compound-indicators">
+        <button class="compound-indicator active" data-slide="0"></button>
+        <button class="compound-indicator" data-slide="1"></button>
+        <button class="compound-indicator" data-slide="2"></button>
+        <button class="compound-indicator" data-slide="3"></button>
+      </div>
+    </div>
+  </section>
+
+ 
+
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2024 Hilltops Academy. All rights reserved.</p>
+      <div class="social-media-links">
+        <a href="#">Facebook</a>
+        <a href="#">Twitter</a>
+        <a href="#">Instagram</a>
+        <a href="mailto:hilltopsacademy@yahoo.com" class="email-link">hilltopsacademy@yahoo.com</a>
+        <a href="tel:+251-930-07-71-27" class="phone-link">+251-930-07-71-27</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
