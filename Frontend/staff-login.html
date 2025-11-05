@@ -152,7 +152,7 @@
 
     <script src="/Public/js/auth.js"></script>
 <script>
-    document.getElementById('staffLoginForm').addEventListener('submit', function(e) {
+    document.getElementById('staffLoginForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const email = document.getElementById('staffEmail').value;
@@ -161,7 +161,10 @@
         // Hide previous errors
         document.getElementById('errorMessage').style.display = 'none';
         
-        if (authManager.authenticateStaff(email, password)) {
+        // Use async authentication
+        const isAuthenticated = await authManager.authenticateStaff(email, password);
+        
+        if (isAuthenticated) {
             authManager.redirectBasedOnRole();
         } else {
             document.getElementById('errorMessage').style.display = 'block';

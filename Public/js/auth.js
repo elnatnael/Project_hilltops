@@ -32,29 +32,60 @@ class AuthManager {
         }
     }
 
-    // Staff authentication
-    authenticateStaff(email, password) {
+    // Staff authentication with backend + fallback
+    async authenticateStaff(email, password) {
+        try {
+            console.log('🔐 Attempting staff login via backend...');
+            
+            const response = await fetch('http://localhost:3000/api/auth/staff-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                const userData = await response.json();
+                console.log('✅ Staff login successful via backend');
+                this.saveCurrentUser(userData);
+                return true;
+            } else {
+                console.log('❌ Backend login failed, using mock data as fallback');
+                return this.authenticateStaffMock(email, password);
+            }
+        } catch (error) {
+            console.log('🌐 Backend not reachable, using mock data:', error.message);
+            return this.authenticateStaffMock(email, password);
+        }
+    }
+
+    // Staff authentication mock data (fallback)
+    authenticateStaffMock(email, password) {
         const staff = {
             'johnson@hilltops.edu': {
                 password: 'teacher123',
                 name: 'Mr. Johnson',
                 subject: 'mathematics',
                 classes: ['grade10_math', 'grade11_math'],
-                id: 'T001'
+                id: 'T001',
+                role: 'teacher'
             },
             'davis@hilltops.edu': {
                 password: 'teacher123', 
                 name: 'Ms. Davis',
                 subject: 'science',
                 classes: ['grade10_science', 'grade11_physics'],
-                id: 'T002'
+                id: 'T002',
+                role: 'teacher'
             },
             'wilson@hilltops.edu': {
                 password: 'teacher123',
                 name: 'Mr. Wilson',
                 subject: 'english',
                 classes: ['grade10_english', 'grade11_english'],
-                id: 'T003'
+                id: 'T003',
+                role: 'teacher'
             },
             'admin@hilltops.edu': {
                 password: 'admin123',
@@ -73,14 +104,44 @@ class AuthManager {
                 role: staffMember.role || 'teacher'
             };
             this.saveCurrentUser(staffData);
+            console.log('✅ Staff login successful via mock data');
             return true;
         }
         
+        console.log('❌ Staff login failed with mock data');
         return false;
     }
 
-    // Student authentication
-    authenticateStudent(email, password) {
+    // Student authentication with backend + fallback
+    async authenticateStudent(email, password) {
+        try {
+            console.log('🔐 Attempting student login via backend...');
+            
+            const response = await fetch('http://localhost:3000/api/auth/student-login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+
+            if (response.ok) {
+                const userData = await response.json();
+                console.log('✅ Student login successful via backend');
+                this.saveCurrentUser(userData);
+                return true;
+            } else {
+                console.log('❌ Backend login failed, using mock data as fallback');
+                return this.authenticateStudentMock(email, password);
+            }
+        } catch (error) {
+            console.log('🌐 Backend not reachable, using mock data:', error.message);
+            return this.authenticateStudentMock(email, password);
+        }
+    }
+
+    // Student authentication mock data (fallback)
+    authenticateStudentMock(email, password) {
         const students = {
             'sarah@hilltops.edu': {
                 password: 'student123',
@@ -114,9 +175,11 @@ class AuthManager {
                 role: 'student'
             };
             this.saveCurrentUser(studentData);
+            console.log('✅ Student login successful via mock data');
             return true;
         }
         
+        console.log('❌ Student login failed with mock data');
         return false;
     }
 
@@ -149,38 +212,76 @@ class AuthManager {
     logout() {
         this.currentUser = null;
         sessionStorage.removeItem('currentUser');
-        window.location.href = '/Frontend/index.html';
+        
+        // Try to call backend logout if available
+        this.backendLogout().finally(() => {
+            window.location.href = 'index.html';
+        });
+    }
+
+    // Backend logout (optional)
+    async backendLogout() {
+        try {
+            await fetch('http://localhost:3000/api/auth/logout', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            console.log('✅ Backend logout successful');
+        } catch (error) {
+            console.log('🌐 Backend logout not available, continuing with frontend logout');
+        }
     }
 
     // Redirect based on user role
     redirectBasedOnRole() {
         if (this.isStaff()) {
-            window.location.href = '/Frontend/teacher-dashboard.html';
+            window.location.href = 'teacher-dashboard.html';
         } else if (this.isStudent()) {
-            window.location.href = '/Frontend/student-dashboard.html';
+            window.location.href = 'student-dashboard.html';
         } else {
-            window.location.href = '/Frontend/index.html';
+            window.location.href = 'index.html';
         }
     }
 
     // Protect route - redirect if not authenticated or wrong role
     protectRoute(allowedRoles = []) {
         if (!this.isAuthenticated()) {
-            window.location.href = '/Frontend/index.html';
+            window.location.href = 'index.html';
             return false;
         }
 
         if (allowedRoles.length > 0 && !allowedRoles.includes(this.currentUser.role)) {
-            window.location.href = '/Frontend/index.html';
+            window.location.href = 'index.html';
             return false;
         }
 
         return true;
     }
+
+    // Check backend status (for debugging)
+    async checkBackendStatus() {
+        try {
+            const response = await fetch('http://localhost:3000/api/status');
+            if (response.ok) {
+                console.log('✅ Backend is running');
+                return true;
+            }
+        } catch (error) {
+            console.log('❌ Backend is not running');
+            return false;
+        }
+    }
 }
 
 // Initialize global auth manager
 const authManager = new AuthManager();
+
+// Auto-check backend status on load
+document.addEventListener('DOMContentLoaded', function() {
+    authManager.checkBackendStatus();
+});
 
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {

@@ -138,9 +138,10 @@
         </div>
     </div>
 
-    <script src="/Public/js/auth.js"></script>
+    
+<script src="/Public/js/auth.js"></script>
 <script>
-    document.getElementById('studentLoginForm').addEventListener('submit', function(e) {
+    document.getElementById('studentLoginForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         
         const email = document.getElementById('studentEmail').value;
@@ -149,7 +150,10 @@
         // Hide previous errors
         document.getElementById('errorMessage').style.display = 'none';
         
-        if (authManager.authenticateStudent(email, password)) {
+        // Use async authentication
+        const isAuthenticated = await authManager.authenticateStudent(email, password);
+        
+        if (isAuthenticated) {
             authManager.redirectBasedOnRole();
         } else {
             document.getElementById('errorMessage').style.display = 'block';
