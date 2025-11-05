@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Hilltops Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .user-info {
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.25);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border-left: 5px solid #3498db;
+        }
+
+        .welcome-section h1 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .welcome-section p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid #3498db;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Content Lists */
+        .content-list {
+            list-style: none;
+        }
+
+        .content-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .content-item:hover {
+            background: #f8f9fa;
+        }
+
+        .content-item:last-child {
+            border-bottom: none;
+        }
+
+        .content-info {
+            flex: 1;
+        }
+
+        .content-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .content-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-upcoming { background: #fff3cd; color: #856404; }
+        .status-active { background: #d4edda; color: #155724; }
+        .status-completed { background: #d1ecf1; color: #0c5460; }
+        .status-pending { background: #f8d7da; color: #721c24; }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .announcement-item, .activity-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .announcement-item:last-child, .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .announcement-title, .activity-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .announcement-content, .activity-content {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .announcement-date, .activity-time {
+            color: #bdc3c7;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Quick Links */
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-link-card {
+            background: #3498db;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .quick-link-card:hover {
+            transform: translateY(-3px);
+            background: #2980b9;
+        }
+
+        .quick-link-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .modal-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            color: #95a5a6;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #e74c3c;
+        }
+
+        /* File Display */
+        .file-preview {
+            border: 2px dashed #bdc3c7;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            margin: 1rem 0;
+            background: #f8f9fa;
+        }
+
+        .file-icon {
+            font-size: 3rem;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 968px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .user-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .content-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication -->
+    <script src="/Public/js/auth.js"></script>
+    <script>
+        // Sample data - In real app, this would come from backend
+        const studentData = {
+            exams: [
+                { id: 1, title: 'Mathematics Midterm', subject: 'Mathematics', date: '2024-03-20 09:00', duration: 120, status: 'upcoming', type: 'exam' },
+                { id: 2, title: 'Science Quiz', subject: 'Science', date: '2024-03-18 11:00', duration: 45, status: 'completed', score: '85%', type: 'quiz' }
+            ],
+            homework: [
+                { id: 1, title: 'Algebra Problem Set', subject: 'Mathematics', dueDate: '2024-03-22 23:59', status: 'active', points: 10, hasFile: true },
+                { id: 2, title: 'Chemistry Lab Report', subject: 'Science', dueDate: '2024-03-25 23:59', status: 'upcoming', points: 15, hasFile: true }
+            ],
+            worksheets: [
+                { id: 1, title: 'Geometry Practice', subject: 'Mathematics', assignedDate: '2024-03-15', hasFile: true },
+                { id: 2, title: 'Physics Problems', subject: 'Science', assignedDate: '2024-03-16', hasFile: true }
+            ],
+            notes: [
+                { id: 1, title: 'Chapter 3: Calculus', subject: 'Mathematics', uploadDate: '2024-03-14', hasFile: true },
+                { id: 2, title: 'Organic Chemistry Notes', subject: 'Science', uploadDate: '2024-03-13', hasFile: true }
+            ],
+            grades: [
+                { id: 1, assignment: 'Mathematics Quiz 1', subject: 'Mathematics', score: '92%', total: '100%', date: '2024-03-10' },
+                { id: 2, assignment: 'Science Lab Report', subject: 'Science', score: '88%', total: '100%', date: '2024-03-08' }
+            ],
+            announcements: [
+                { id: 1, title: 'School Holiday', content: 'School will be closed on March 30th for professional development day.', date: '2024-03-14' },
+                { id: 2, title: 'Science Fair', content: 'Annual science fair submissions due by April 15th.', date: '2024-03-12' }
+            ]
+        };
+
+        // Global logout function with redirect to login page
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                authManager.logout();
+                // Redirect to student login page
+                window.location.href = 'student-login.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Protect student dashboard
+            if (!authManager.protectRoute(['student'])) {
+                return;
+            }
+
+            // Display user info
+            const currentUser = authManager.getCurrentUser();
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userGrade').textContent = currentUser.grade;
+                
+                // Update dashboard with student data
+                updateStudentDashboard(currentUser);
+            }
+
+            initializeModals();
+        });
+
+        function initializeModals() {
+            // Close modal when clicking X
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        function updateStudentDashboard(student) {
+            // Update exams
+            renderExams();
+            
+            // Update homework
+            renderHomework();
+            
+            // Update worksheets
+            renderWorksheets();
+            
+            // Update notes
+            renderNotes();
+            
+            // Update grades
+            renderGrades();
+            
+            // Update announcements
+            renderAnnouncements();
+        }
+
+        function renderExams() {
+            const container = document.getElementById('examsList');
+            container.innerHTML = studentData.exams.map(exam => `
+                <li class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">${exam.title}</div>
+                        <div class="content-meta">
+                            <span>📚 ${exam.subject}</span>
+                            <span>📅 ${new Date(exam.date).toLocaleString()}</span>
+                            <span>⏱️ ${exam.duration} minutes</span>
+                        </div>
+                    </div>
+                    <div class="content-actions">
+                        <span class="status-badge status-${exam.status}">
+                            ${exam.status === 'completed' ? `Score: ${exam.score}` : exam.status}
+                        </span>
+                        ${exam.status === 'upcoming' ? 
+                            `<button class="btn btn-primary" onclick="startExam(${exam.id})">Start Exam</button>` : 
+                            `<button class="btn btn-secondary" onclick="viewResults(${exam.id})">View Results</button>`
+                        }
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        function renderHomework() {
+            const container = document.getElementById('homeworkList');
+            container.innerHTML = studentData.homework.map(hw => `
+                <li class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">${hw.title}</div>
+                        <div class="content-meta">
+                            <span>📚 ${hw.subject}</span>
+                            <span>⏰ Due: ${new Date(hw.dueDate).toLocaleString()}</span>
+                            <span>⭐ ${hw.points} points</span>
+                        </div>
+                    </div>
+                    <div class="content-actions">
+                        <span class="status-badge status-${hw.status}">${hw.status}</span>
+                        <button class="btn btn-primary" onclick="viewHomework(${hw.id})">
+                            ${hw.hasFile ? 'Download' : 'View'}
+                        </button>
+                        ${hw.status === 'active' ? 
+                            `<button class="btn btn-secondary" onclick="submitHomework(${hw.id})">Submit</button>` : ''
+                        }
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        function renderWorksheets() {
+            const container = document.getElementById('worksheetsList');
+            container.innerHTML = studentData.worksheets.map(ws => `
+                <li class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">${ws.title}</div>
+                        <div class="content-meta">
+                            <span>📚 ${ws.subject}</span>
+                            <span>📅 Assigned: ${new Date(ws.assignedDate).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                    <div class="content-actions">
+                        <button class="btn btn-primary" onclick="downloadWorksheet(${ws.id})">
+                            ${ws.hasFile ? 'Download' : 'View'}
+                        </button>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        function renderNotes() {
+            const container = document.getElementById('notesList');
+            container.innerHTML = studentData.notes.map(note => `
+                <li class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">${note.title}</div>
+                        <div class="content-meta">
+                            <span>📚 ${note.subject}</span>
+                            <span>📅 Uploaded: ${new Date(note.uploadDate).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                    <div class="content-actions">
+                        <button class="btn btn-primary" onclick="downloadNotes(${note.id})">
+                            ${note.hasFile ? 'Download PDF' : 'View'}
+                        </button>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        function renderGrades() {
+            const container = document.getElementById('gradesList');
+            container.innerHTML = studentData.grades.map(grade => `
+                <li class="content-item">
+                    <div class="content-info">
+                        <div class="content-title">${grade.assignment}</div>
+                        <div class="content-meta">
+                            <span>📚 ${grade.subject}</span>
+                            <span>📅 ${new Date(grade.date).toLocaleDateString()}</span>
+                        </div>
+                    </div>
+                    <div class="content-actions">
+                        <span class="status-badge status-completed">${grade.score} / ${grade.total}</span>
+                        <button class="btn btn-secondary" onclick="viewGradeDetails(${grade.id})">Details</button>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        function renderAnnouncements() {
+            const container = document.getElementById('announcementsList');
+            container.innerHTML = studentData.announcements.map(announcement => `
+                <div class="announcement-item">
+                    <div class="announcement-title">${announcement.title}</div>
+                    <div class="announcement-content">${announcement.content}</div>
+                    <div class="announcement-date">${new Date(announcement.date).toLocaleDateString()}</div>
+                </div>
+            `).join('');
+        }
+
+        // Action functions
+        function startExam(examId) {
+            const exam = studentData.exams.find(e => e.id === examId);
+            if (exam) {
+                alert(`Starting exam: ${exam.title}\nDuration: ${exam.duration} minutes`);
+                // In real app, this would redirect to exam interface
+            }
+        }
+
+        function viewResults(examId) {
+            const exam = studentData.exams.find(e => e.id === examId);
+            if (exam) {
+                alert(`Exam Results for: ${exam.title}\nScore: ${exam.score}`);
+            }
+        }
+
+        function viewHomework(homeworkId) {
+            const hw = studentData.homework.find(h => h.id === homeworkId);
+            if (hw) {
+                document.getElementById('modalTitle').textContent = hw.title;
+                document.getElementById('modalContent').innerHTML = `
+                    <div class="file-preview">
+                        <div class="file-icon">📄</div>
+                        <h3>${hw.title}</h3>
+                        <p><strong>Subject:</strong> ${hw.subject}</p>
+                        <p><strong>Due Date:</strong> ${new Date(hw.dueDate).toLocaleString()}</p>
+                        <p><strong>Points:</strong> ${hw.points}</p>
+                        <p><strong>Status:</strong> <span class="status-badge status-${hw.status}">${hw.status}</span></p>
+                        <button class="btn btn-primary" style="margin-top: 1rem;">Download Homework File</button>
+                    </div>
+                `;
+                document.getElementById('contentModal').style.display = 'block';
+            }
+        }
+
+        function submitHomework(homeworkId) {
+            alert('Homework submission feature would open here with file upload');
+        }
+
+        function downloadWorksheet(worksheetId) {
+            const ws = studentData.worksheets.find(w => w.id === worksheetId);
+            if (ws) {
+                alert(`Downloading worksheet: ${ws.title}`);
+            }
+        }
+
+        function downloadNotes(notesId) {
+            const note = studentData.notes.find(n => n.id === notesId);
+            if (note) {
+                alert(`Downloading notes: ${note.title}`);
+            }
+        }
+
+        function viewGradeDetails(gradeId) {
+            const grade = studentData.grades.find(g => g.id === gradeId);
+            if (grade) {
+                document.getElementById('modalTitle').textContent = 'Grade Details';
+                document.getElementById('modalContent').innerHTML = `
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">📊</div>
+                        <h3>${grade.assignment}</h3>
+                        <p><strong>Subject:</strong> ${grade.subject}</p>
+                        <p><strong>Score:</strong> ${grade.score}</p>
+                        <p><strong>Total:</strong> ${grade.total}</p>
+                        <p><strong>Date:</strong> ${new Date(grade.date).toLocaleDateString()}</p>
+                        <div style="margin-top: 2rem;">
+                            <button class="btn btn-primary" onclick="alert('Detailed breakdown would show here')">View Detailed Breakdown</button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('contentModal').style.display = 'block';
+            }
+        }
+
+        // Quick link functions
+        function viewAllCourses() {
+            alert('Course catalog would open here');
+        }
+
+        function viewTimetable() {
+            alert('Class timetable would show here');
+        }
+
+        function viewResources() {
+            alert('Learning resources library would open here');
+        }
+
+        function contactTeachers() {
+            alert('Teacher communication interface would open here');
+        }
+    </script>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <span>🏫</span>
+                <span>Hilltops Academy - Student Portal</span>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+                    Welcome, <span id="userName">Student</span> (<span id="userGrade">Grade 10</span>)
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    🚪 Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h1>Student Dashboard</h1>
+            <p>Access your courses, assignments, exams, and track your academic progress.</p>
+        </section>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="activeCourses">3</div>
+                <div class="stat-label">Active Courses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingAssignments">2</div>
+                <div class="stat-label">Pending Assignments</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="upcomingExams">1</div>
+                <div class="stat-label">Upcoming Exams</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="averageGrade">87%</div>
+                <div class="stat-label">Average Grade</div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Upcoming Exams -->
+                <section class="content-section">
+                    <h2 class="section-title">📝 Exams & Quizzes</h2>
+                    <ul class="content-list" id="examsList">
+                        <!-- Exams will be dynamically loaded here -->
+                    </ul>
+                </section>
+
+                <!-- Homework Assignments -->
+                <section class="content-section">
+                    <h2 class="section-title">📚 Homework Assignments</h2>
+                    <ul class="content-list" id="homeworkList">
+                        <!-- Homework will be dynamically loaded here -->
+                    </ul>
+                </section>
+
+                <!-- Study Materials -->
+                <section class="content-section">
+                    <h2 class="section-title">📖 Study Materials</h2>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div>
+                            <h3 style="margin-bottom: 1rem; color: #2c3e50;">Worksheets</h3>
+                            <ul class="content-list" id="worksheetsList">
+                                <!-- Worksheets will be dynamically loaded here -->
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 1rem; color: #2c3e50;">Study Notes</h3>
+                            <ul class="content-list" id="notesList">
+                                <!-- Notes will be dynamically loaded here -->
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Grades -->
+                <section class="content-section">
+                    <h2 class="section-title">📊 Recent Grades</h2>
+                    <ul class="content-list" id="gradesList">
+                        <!-- Grades will be dynamically loaded here -->
+                    </ul>
+                </section>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Quick Links -->
+                <section class="sidebar-section">
+                    <h2 class="section-title">Quick Access</h2>
+                    <div class="quick-links-grid">
+                        <div class="quick-link-card" onclick="viewAllCourses()">
+                            <div class="quick-link-icon">📚</div>
+                            <div>My Courses</div>
+                        </div>
+                        <div class="quick-link-card" onclick="viewTimetable()">
+                            <div class="quick-link-icon">📅</div>
+                            <div>Timetable</div>
+                        </div>
+                        <div class="quick-link-card" onclick="viewResources()">
+                            <div class="quick-link-icon">🔗</div>
+                            <div>Resources</div>
+                        </div>
+                        <div class="quick-link-card" onclick="contactTeachers()">
+                            <div class="quick-link-icon">👨‍🏫</div>
+                            <div>Teachers</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Announcements -->
+                <section class="sidebar-section">
+                    <h2 class="section-title">📢 Announcements</h2>
+                    <div id="announcementsList">
+                        <!-- Announcements will be dynamically loaded here -->
+                    </div>
+                </section>
+
+                <!-- Recent Activity -->
+                <section class="sidebar-section">
+                    <h2 class="section-title">🕒 Recent Activity</h2>
+                    <div class="activity-item">
+                        <div class="activity-title">Submitted Mathematics Homework</div>
+                        <div class="activity-content">Algebra Problem Set #2</div>
+                        <div class="activity-time">2 hours ago</div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-title">Viewed Science Notes</div>
+                        <div class="activity-content">Chapter 4: Chemical Reactions</div>
+                        <div class="activity-time">Yesterday, 4:30 PM</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Content Modal -->
+    <div id="contentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Content Details</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div id="modalContent">
+                <!-- Modal content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

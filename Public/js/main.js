@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize School Compound Slider
     initSchoolCompoundSlider();
     
+    // Initialize News Carousel
+    initNewsCarousel();
+    
     // Initialize Email Links
     initEmailLinks();
     
@@ -241,6 +244,147 @@ function initSchoolCompoundSlider() {
     console.log('Initializing School Compound slider with slide 0');
     showSlide(0);
     startTimer();
+}
+
+function initNewsCarousel() {
+    console.log('Initializing News Carousel');
+    
+    const newsSlides = document.querySelectorAll('.news-slide');
+    const indicators = document.querySelectorAll('.carousel-indicators .indicator');
+    const prevButton = document.querySelector('.carousel-prev');
+    const nextButton = document.querySelector('.carousel-next');
+    
+    console.log('News Slides found:', newsSlides.length);
+    console.log('News Indicators found:', indicators.length);
+    
+    // If no news carousel elements found, exit early
+    if (newsSlides.length === 0) {
+        console.log('No News Carousel found on this page');
+        return;
+    }
+    
+    let currentSlide = 0;
+    const slideDuration = 5000; // 5 seconds per slide
+    let autoSlideInterval;
+
+    function showSlide(slideIndex) {
+        console.log('Showing News slide:', slideIndex);
+        
+        // Remove active class from all slides and indicators
+        newsSlides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        // Add active class to current slide and indicator
+        newsSlides[slideIndex].classList.add('active');
+        indicators[slideIndex].classList.add('active');
+        
+        currentSlide = slideIndex;
+        console.log('News current slide is now:', currentSlide);
+    }
+
+    function nextSlide() {
+        const nextIndex = (currentSlide + 1) % newsSlides.length;
+        showSlide(nextIndex);
+    }
+
+    function prevSlide() {
+        const prevIndex = (currentSlide - 1 + newsSlides.length) % newsSlides.length;
+        showSlide(prevIndex);
+    }
+
+    // Start auto-sliding
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(nextSlide, slideDuration);
+        console.log('News auto-slide timer started');
+    }
+
+    // Stop auto-sliding
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+        console.log('News auto-slide timer stopped');
+    }
+
+    // Manual navigation with arrows
+    if (nextButton) {
+        nextButton.addEventListener('click', function() {
+            console.log('News next button clicked');
+            stopAutoSlide();
+            nextSlide();
+            startAutoSlide();
+        });
+    }
+
+    if (prevButton) {
+        prevButton.addEventListener('click', function() {
+            console.log('News prev button clicked');
+            stopAutoSlide();
+            prevSlide();
+            startAutoSlide();
+        });
+    }
+
+    // Indicator clicks
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', function() {
+            console.log('News indicator clicked:', index);
+            stopAutoSlide();
+            showSlide(index);
+            startAutoSlide();
+        });
+    });
+
+    // Pause auto-slide on hover
+    const newsCarousel = document.querySelector('.news-carousel');
+    if (newsCarousel) {
+        newsCarousel.addEventListener('mouseenter', function() {
+            console.log('News carousel hovered - pausing');
+            stopAutoSlide();
+        });
+        
+        newsCarousel.addEventListener('mouseleave', function() {
+            console.log('News carousel left - resuming');
+            startAutoSlide();
+        });
+    }
+
+    // Touch swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (newsCarousel) {
+        newsCarousel.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            console.log('News touch started at:', touchStartX);
+        });
+
+        newsCarousel.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            console.log('News touch ended at:', touchEndX);
+            handleSwipe();
+        });
+    }
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            stopAutoSlide();
+            if (diff > 0) {
+                console.log('News swipe left detected');
+                nextSlide(); // Swipe left
+            } else {
+                console.log('News swipe right detected');
+                prevSlide(); // Swipe right
+            }
+            startAutoSlide();
+        }
+    }
+
+    // Initialize
+    console.log('Initializing News carousel with slide 0');
+    showSlide(0);
+    startAutoSlide();
 }
 
 function initEmailLinks() {

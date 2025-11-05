@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Portal Login - Hilltops Academy</title>
+    <link rel="stylesheet" href="/Public/css/styles.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 2rem;
+        }
+        
+        .login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-header img {
+            height: 60px;
+            margin-bottom: 1rem;
+        }
+        
+        .staff-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #e74c3c;
+        }
+        
+        .login-btn {
+            width: 100%;
+            background: #e74c3c;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-bottom: 1rem;
+        }
+        
+        .login-btn:hover {
+            background: #c0392b;
+        }
+        
+        .back-link {
+            color: #666;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+        
+        .back-link:hover {
+            color: #e74c3c;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .teacher-notes {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <div class="staff-badge">👨‍🏫 Staff Portal</div>
+                <h2>Staff Login</h2>
+                <p>Teacher and administrative access</p>
+            </div>
+            
+            <form id="staffLoginForm">
+                <div class="form-group">
+                    <label for="staffEmail">Staff Email:</label>
+                    <input type="email" id="staffEmail" name="email" required 
+                           placeholder="staffname@hilltops.edu">
+                </div>
+                
+                <div class="form-group">
+                    <label for="staffPassword">Password</label>
+                    <input type="password" id="staffPassword" name="password" required 
+                           placeholder="Enter your password">
+                </div>
+                
+                <button type="submit" class="login-btn">
+                    Login to Staff Portal
+                </button>
+                
+                <div class="error-message" id="errorMessage">
+                    Invalid staff email or password
+                </div>
+            </form>
+            
+            <div class="teacher-notes">
+                <strong>For Teachers:</strong> Access exam creation, grade management, and student progress tracking.
+            </div>
+            
+            <a href="/Frontend/index.html" class="back-link">← Back to Homepage</a>
+        </div>
+    </div>
+
+    <script src="/Public/js/auth.js"></script>
+<script>
+    document.getElementById('staffLoginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('staffEmail').value;
+        const password = document.getElementById('staffPassword').value;
+        
+        // Hide previous errors
+        document.getElementById('errorMessage').style.display = 'none';
+        
+        if (authManager.authenticateStaff(email, password)) {
+            authManager.redirectBasedOnRole();
+        } else {
+            document.getElementById('errorMessage').style.display = 'block';
+        }
+    });
+
+    // Check if already logged in
+    document.addEventListener('DOMContentLoaded', function() {
+        if (authManager.isStaff()) {
+            authManager.redirectBasedOnRole();
+        }
+    });
+</script>
+</body>
+</html>

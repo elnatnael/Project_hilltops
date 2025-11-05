@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Hilltops Academy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 20px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .user-info {
+            font-weight: 500;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.25);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border-left: 5px solid #e74c3c;
+        }
+
+        .welcome-section h1 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .welcome-section p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            border-top: 4px solid #e74c3c;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Teaching Tools */
+        .tools-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 0.5rem;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid #e74c3c;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .tool-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .tool-card h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .tool-card p {
+            color: #7f8c8d;
+            line-height: 1.5;
+            font-size: 0.9rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .modal-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            color: #95a5a6;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #e74c3c;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .question-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .question-type-btn {
+            padding: 1rem;
+            border: 2px solid #e0e6ed;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .question-type-btn:hover {
+            border-color: #3498db;
+            background: #f8f9fa;
+        }
+
+        .question-type-btn.active {
+            border-color: #e74c3c;
+            background: #e74c3c;
+            color: white;
+        }
+
+        .file-upload-area {
+            border: 2px dashed #bdc3c7;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .file-upload-area:hover {
+            border-color: #e74c3c;
+            background: #fff;
+        }
+
+        .file-upload-area.has-file {
+            border-color: #27ae60;
+            background: #d5f4e6;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: #bdc3c7;
+            margin-bottom: 1rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #e8f6f3;
+            border-radius: 5px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .submit-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        /* Question Builder Styles */
+        .question-builder {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px dashed #dee2e6;
+        }
+
+        .question-item {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .question-number {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .remove-question {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .option-group {
+            margin: 1rem 0;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.5rem;
+        }
+
+        .option-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .correct-answer {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .add-question-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .add-question-btn:hover {
+            background: #219a52;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        /* Grading System Styles */
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .grading-table th {
+            background: #34495e;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .grading-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .grading-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .grade-input {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .student-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 1rem 0;
+        }
+
+        .student-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .student-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Recent Activity */
+        .activity-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            padding: 1.2rem;
+            border-bottom: 1px solid #ecf0f1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #f8f9fa;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 45px;
+            height: 45px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+        }
+
+        .activity-time {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .user-section {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                margin: 5% auto;
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication -->
+    <script src="/Public/js/auth.js"></script>
+    <script>
+        // Sample student data for grading
+        const sampleStudents = [
+            { id: 1, name: 'Sarah Johnson', grade: 'Grade 10' },
+            { id: 2, name: 'Mike Brown', grade: 'Grade 11' },
+            { id: 3, name: 'Emma Davis', grade: 'Grade 10' },
+            { id: 4, name: 'John Wilson', grade: 'Grade 11' },
+            { id: 5, name: 'Lisa Anderson', grade: 'Grade 10' }
+        ];
+
+        // Global logout function with redirect to login page
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                authManager.logout();
+                // Redirect to staff login page
+                window.location.href = 'staff-login.html';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Protect teacher dashboard
+            if (!authManager.protectRoute(['teacher', 'admin'])) {
+                return;
+            }
+
+            // Display user info
+            const currentUser = authManager.getCurrentUser();
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.name;
+                document.getElementById('userRole').textContent = 
+                    currentUser.role === 'admin' ? 'Administrator' : (currentUser.subject || 'Teacher');
+            }
+
+            initializeModals();
+            loadGradingData();
+        });
+
+        function initializeModals() {
+            // Close modal when clicking X
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                    resetExamForm();
+                });
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                        resetExamForm();
+                    }
+                });
+            });
+        }
+
+        // File upload handling
+        function handleFileUpload(inputId, uploadAreaId) {
+            const fileInput = document.getElementById(inputId);
+            const uploadArea = document.getElementById(uploadAreaId);
+            const file = fileInput.files[0];
+            
+            if (file) {
+                uploadArea.classList.add('has-file');
+                const fileInfo = uploadArea.querySelector('.file-info') || document.createElement('div');
+                fileInfo.className = 'file-info';
+                fileInfo.innerHTML = `
+                    <strong>Selected File:</strong> ${file.name}<br>
+                    <strong>Type:</strong> ${file.type}<br>
+                    <strong>Size:</strong> ${(file.size / 1024 / 1024).toFixed(2)} MB
+                `;
+                if (!uploadArea.querySelector('.file-info')) {
+                    uploadArea.appendChild(fileInfo);
+                }
+            }
+        }
+
+        // Modal control functions
+        function openCreateExam() {
+            document.getElementById('createExamModal').style.display = 'block';
+            resetExamForm();
+        }
+
+        function openCreateHomework() {
+            document.getElementById('createHomeworkModal').style.display = 'block';
+        }
+
+        function openCreateWorksheet() {
+            document.getElementById('createWorksheetModal').style.display = 'block';
+        }
+
+        function openAddNotes() {
+            document.getElementById('addNotesModal').style.display = 'block';
+        }
+
+        function openGradingSystem() {
+            document.getElementById('gradingSystemModal').style.display = 'block';
+            loadGradingData();
+        }
+
+        // Question type selection
+        let currentQuestionType = 'multiple-choice';
+        function selectQuestionType(type) {
+            currentQuestionType = type;
+            document.querySelectorAll('.question-type-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            updateQuestionBuilder();
+        }
+
+        // Question management
+        let questionCount = 0;
+        const questions = [];
+
+        function addQuestion() {
+            questionCount++;
+            const question = {
+                id: questionCount,
+                type: currentQuestionType,
+                question: '',
+                options: currentQuestionType === 'multiple-choice' ? ['', '', '', ''] : [],
+                correctAnswer: '',
+                points: 1
+            };
+            questions.push(question);
+            renderQuestions();
+        }
+
+        function removeQuestion(id) {
+            const index = questions.findIndex(q => q.id === id);
+            if (index > -1) {
+                questions.splice(index, 1);
+                renderQuestions();
+            }
+        }
+
+        function updateQuestion(id, field, value) {
+            const question = questions.find(q => q.id === id);
+            if (question) {
+                question[field] = value;
+            }
+        }
+
+        function updateOption(questionId, optionIndex, value) {
+            const question = questions.find(q => q.id === questionId);
+            if (question && question.options) {
+                question.options[optionIndex] = value;
+            }
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            questions.forEach(question => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-item';
+                questionElement.innerHTML = getQuestionHTML(question);
+                container.appendChild(questionElement);
+            });
+
+            // Update question numbers
+            document.querySelectorAll('.question-number').forEach((element, index) => {
+                element.textContent = `Question ${index + 1}`;
+            });
+        }
+
+        function getQuestionHTML(question) {
+            switch(question.type) {
+                case 'multiple-choice':
+                    return `
+                        <div class="question-header">
+                            <div class="question-number">Question ${questions.indexOf(question) + 1}</div>
+                            <button class="remove-question" onclick="removeQuestion(${question.id})">Remove</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Question</label>
+                            <textarea class="form-textarea" onchange="updateQuestion(${question.id}, 'question', this.value)" 
+                                      placeholder="Enter your question here...">${question.question}</textarea>
+                        </div>
+                        <div class="option-group">
+                            <label class="form-label">Options</label>
+                            ${question.options.map((option, index) => `
+                                <div class="option-item">
+                                    <span>${String.fromCharCode(65 + index)}.</span>
+                                    <input type="text" class="option-input" value="${option}" 
+                                           onchange="updateOption(${question.id}, ${index}, this.value)" 
+                                           placeholder="Option ${String.fromCharCode(65 + index)}">
+                                </div>
+                            `).join('')}
+                        </div>
+                        <div class="correct-answer">
+                            <label class="form-label">Correct Answer:</label>
+                            <select onchange="updateQuestion(${question.id}, 'correctAnswer', this.value)">
+                                <option value="">Select correct option</option>
+                                ${question.options.map((_, index) => `
+                                    <option value="${String.fromCharCode(65 + index)}" ${question.correctAnswer === String.fromCharCode(65 + index) ? 'selected' : ''}>
+                                        ${String.fromCharCode(65 + index)}
+                                    </option>
+                                `).join('')}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Points</label>
+                            <input type="number" value="${question.points}" min="1" 
+                                   onchange="updateQuestion(${question.id}, 'points', this.value)">
+                        </div>
+                    `;
+                
+                case 'true-false':
+                    return `
+                        <div class="question-header">
+                            <div class="question-number">Question ${questions.indexOf(question) + 1}</div>
+                            <button class="remove-question" onclick="removeQuestion(${question.id})">Remove</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Question</label>
+                            <textarea class="form-textarea" onchange="updateQuestion(${question.id}, 'question', this.value)" 
+                                      placeholder="Enter your True/False question...">${question.question}</textarea>
+                        </div>
+                        <div class="correct-answer">
+                            <label class="form-label">Correct Answer:</label>
+                            <select onchange="updateQuestion(${question.id}, 'correctAnswer', this.value)">
+                                <option value="">Select correct answer</option>
+                                <option value="true" ${question.correctAnswer === 'true' ? 'selected' : ''}>True</option>
+                                <option value="false" ${question.correctAnswer === 'false' ? 'selected' : ''}>False</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Points</label>
+                            <input type="number" value="${question.points}" min="1" 
+                                   onchange="updateQuestion(${question.id}, 'points', this.value)">
+                        </div>
+                    `;
+                
+                case 'short-answer':
+                    return `
+                        <div class="question-header">
+                            <div class="question-number">Question ${questions.indexOf(question) + 1}</div>
+                            <button class="remove-question" onclick="removeQuestion(${question.id})">Remove</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Question</label>
+                            <textarea class="form-textarea" onchange="updateQuestion(${question.id}, 'question', this.value)" 
+                                      placeholder="Enter your short answer question...">${question.question}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Expected Answer</label>
+                            <input type="text" class="form-input" value="${question.correctAnswer}" 
+                                   onchange="updateQuestion(${question.id}, 'correctAnswer', this.value)" 
+                                   placeholder="Enter expected answer...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Points</label>
+                            <input type="number" value="${question.points}" min="1" 
+                                   onchange="updateQuestion(${question.id}, 'points', this.value)">
+                        </div>
+                    `;
+                
+                case 'essay':
+                    return `
+                        <div class="question-header">
+                            <div class="question-number">Question ${questions.indexOf(question) + 1}</div>
+                            <button class="remove-question" onclick="removeQuestion(${question.id})">Remove</button>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Essay Question</label>
+                            <textarea class="form-textarea" onchange="updateQuestion(${question.id}, 'question', this.value)" 
+                                      placeholder="Enter your essay question...">${question.question}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Points</label>
+                            <input type="number" value="${question.points}" min="1" 
+                                   onchange="updateQuestion(${question.id}, 'points', this.value)">
+                        </div>
+                    `;
+            }
+        }
+
+        function updateQuestionBuilder() {
+            // This will be used when switching question types to update the builder interface
+        }
+
+        function resetExamForm() {
+            questions.length = 0;
+            questionCount = 0;
+            document.getElementById('questionsContainer').innerHTML = '';
+            document.getElementById('examForm').reset();
+        }
+
+        // Grading System Functions
+        function loadGradingData() {
+            const container = document.getElementById('gradingContainer');
+            container.innerHTML = `
+                <div class="form-group">
+                    <label class="form-label">Select Assignment/Exam</label>
+                    <select class="form-select" id="gradingAssignment" onchange="updateGradingTable()">
+                        <option value="">Choose assignment</option>
+                        <option value="math_quiz1">Mathematics Quiz 1</option>
+                        <option value="science_midterm">Science Midterm</option>
+                        <option value="english_essay">English Essay</option>
+                    </select>
+                </div>
+                <div id="gradingTableContainer"></div>
+            `;
+        }
+
+        function updateGradingTable() {
+            const assignment = document.getElementById('gradingAssignment').value;
+            if (!assignment) return;
+
+            const container = document.getElementById('gradingTableContainer');
+            container.innerHTML = `
+                <div class="grading-table-container">
+                    <h3 style="margin: 1rem 0;">Grading for ${assignment.replace('_', ' ').toUpperCase()}</h3>
+                    <table class="grading-table">
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Grade</th>
+                                <th>Marks Obtained</th>
+                                <th>Total Marks</th>
+                                <th>Percentage</th>
+                                <th>Comments</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sampleStudents.map(student => `
+                                <tr>
+                                    <td>${student.name}</td>
+                                    <td>${student.grade}</td>
+                                    <td><input type="number" class="grade-input" value="0" min="0" max="100" onchange="calculatePercentage(this)"></td>
+                                    <td><input type="number" class="grade-input" value="100" min="1" max="100" onchange="calculatePercentage(this)"></td>
+                                    <td class="percentage">0%</td>
+                                    <td><input type="text" class="form-input" placeholder="Comments..." style="padding: 8px;"></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                    <div class="action-buttons">
+                        <button type="button" class="btn-secondary" onclick="saveGrades()">Save Grades</button>
+                        <button type="button" class="submit-btn" onclick="exportGradeSheet()">Export Grade Sheet</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function calculatePercentage(input) {
+            const row = input.closest('tr');
+            const marksObtained = parseFloat(row.querySelector('td:nth-child(3) input').value) || 0;
+            const totalMarks = parseFloat(row.querySelector('td:nth-child(4) input').value) || 1;
+            const percentage = (marksObtained / totalMarks * 100).toFixed(1);
+            row.querySelector('.percentage').textContent = percentage + '%';
+        }
+
+        function saveGrades() {
+            alert('Grades saved successfully!');
+        }
+
+        function exportGradeSheet() {
+            alert('Grade sheet exported as CSV!');
+        }
+
+        // Form submissions
+        function submitExamForm(event) {
+            event.preventDefault();
+            
+            if (questions.length === 0) {
+                alert('Please add at least one question to the exam.');
+                return;
+            }
+
+            const formData = new FormData(event.target);
+            const examData = Object.fromEntries(formData);
+            
+            const exam = {
+                ...examData,
+                questions: questions,
+                totalQuestions: questions.length,
+                totalPoints: questions.reduce((sum, q) => sum + parseInt(q.points), 0)
+            };
+
+            alert(`Exam "${exam.examTitle}" created successfully with ${exam.totalQuestions} questions!`);
+            console.log('Exam created:', exam);
+            
+            document.getElementById('createExamModal').style.display = 'none';
+            resetExamForm();
+        }
+
+        function submitHomeworkForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const homeworkData = Object.fromEntries(formData);
+            
+            // Check if file is uploaded
+            const homeworkFile = document.getElementById('homeworkFile').files[0];
+            if (!homeworkFile) {
+                alert('Please upload a homework file!');
+                return;
+            }
+
+            alert(`Homework "${homeworkData.homeworkTitle}" assigned successfully with file: ${homeworkFile.name}`);
+            document.getElementById('createHomeworkModal').style.display = 'none';
+            event.target.reset();
+        }
+
+        function submitWorksheetForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const worksheetData = Object.fromEntries(formData);
+            
+            // Check if file is uploaded
+            const worksheetFile = document.getElementById('worksheetFile').files[0];
+            if (!worksheetFile) {
+                alert('Please upload a worksheet file!');
+                return;
+            }
+
+            alert(`Worksheet "${worksheetData.worksheetTitle}" created successfully with file: ${worksheetFile.name}`);
+            document.getElementById('createWorksheetModal').style.display = 'none';
+            event.target.reset();
+        }
+
+        function submitNotesForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const notesData = Object.fromEntries(formData);
+            
+            // Check if file is uploaded
+            const notesFile = document.getElementById('notesFile').files[0];
+            if (!notesFile) {
+                alert('Please upload a notes file!');
+                return;
+            }
+
+            alert(`Notes "${notesData.notesTitle}" uploaded successfully with file: ${notesFile.name}`);
+            document.getElementById('addNotesModal').style.display = 'none';
+            event.target.reset();
+        }
+    </script>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <span>🏫</span>
+                <span>Hilltops Academy - Teacher Portal</span>
+            </div>
+            <div class="user-section">
+                <div class="user-info">
+                    Welcome, <span id="userName">Teacher</span> (<span id="userRole">Teacher</span>)
+                </div>
+                <button onclick="logout()" class="logout-btn">
+                    🚪 Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h1>Teacher Dashboard</h1>
+            <p>Manage your classes, create content, and track student progress all in one place.</p>
+        </section>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Active Classes</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24</div>
+                <div class="stat-label">Total Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Pending Grading</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Exams Created</div>
+            </div>
+        </div>
+
+        <!-- Teaching Tools -->
+        <section class="tools-section">
+            <h2 class="section-title">Teaching Tools</h2>
+            <div class="tools-grid">
+                <!-- Create Exam -->
+                <div class="tool-card" onclick="openCreateExam()">
+                    <div class="tool-icon">📝</div>
+                    <h3>Create Exam</h3>
+                    <p>Design exams with multiple question types including multiple choice, true/false, and essay questions.</p>
+                </div>
+
+                <!-- Assign Homework -->
+                <div class="tool-card" onclick="openCreateHomework()">
+                    <div class="tool-icon">📚</div>
+                    <h3>Assign Homework</h3>
+                    <p>Create and assign homework with due dates, instructions, and PDF/image attachments.</p>
+                </div>
+
+                <!-- Create Worksheet -->
+                <div class="tool-card" onclick="openCreateWorksheet()">
+                    <div class="tool-icon">📄</div>
+                    <h3>Create Worksheet</h3>
+                    <p>Design practice worksheets and exercises with PDF/image upload support.</p>
+                </div>
+
+                <!-- Add Notes -->
+                <div class="tool-card" onclick="openAddNotes()">
+                    <div class="tool-icon">📖</div>
+                    <h3>Add Study Notes</h3>
+                    <p>Upload PDF notes, presentations, and study materials for your students.</p>
+                </div>
+
+                <!-- Grading System -->
+                <div class="tool-card" onclick="openGradingSystem()">
+                    <div class="tool-icon">📊</div>
+                    <h3>Grading System</h3>
+                    <p>Input and manage student grades, calculate averages, and generate mark lists.</p>
+                </div>
+
+                <!-- Student Progress -->
+                <div class="tool-card" onclick="alert('Student progress tracking coming soon!')">
+                    <div class="tool-icon">📈</div>
+                    <h3>Student Progress</h3>
+                    <p>Track individual student performance and identify learning gaps.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity -->
+        <section class="activity-section">
+            <h2 class="section-title">Recent Activity</h2>
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <div class="activity-icon">✓</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Graded Mathematics Quiz</div>
+                        <div class="activity-time">2 hours ago</div>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">+</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Created Algebra Homework</div>
+                        <div class="activity-time">Yesterday, 3:45 PM</div>
+                    </div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">📄</div>
+                    <div class="activity-content">
+                        <div class="activity-title">Uploaded Chapter 3 Notes PDF</div>
+                        <div class="activity-time">March 15, 2024</div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Modals -->
+
+    <!-- Create Exam Modal -->
+    <div id="createExamModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create New Exam</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <form id="examForm" onsubmit="submitExamForm(event)">
+                <div class="form-group">
+                    <label class="form-label">Exam Title</label>
+                    <input type="text" class="form-input" name="examTitle" required placeholder="e.g., Midterm Mathematics Exam">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Class</label>
+                    <select class="form-select" name="examClass" required>
+                        <option value="">Choose a class</option>
+                        <option value="grade10_math">Grade 10 Mathematics</option>
+                        <option value="grade11_math">Grade 11 Mathematics</option>
+                        <option value="grade10_science">Grade 10 Science</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Question Type</label>
+                    <div class="question-type-grid">
+                        <div class="question-type-btn active" onclick="selectQuestionType('multiple-choice')">
+                            Multiple Choice
+                        </div>
+                        <div class="question-type-btn" onclick="selectQuestionType('true-false')">
+                            True/False
+                        </div>
+                        <div class="question-type-btn" onclick="selectQuestionType('short-answer')">
+                            Short Answer
+                        </div>
+                        <div class="question-type-btn" onclick="selectQuestionType('essay')">
+                            Essay
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Exam Date & Time</label>
+                    <input type="datetime-local" class="form-input" name="examDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Duration (minutes)</label>
+                    <input type="number" class="form-input" name="examDuration" required min="5" max="180" value="60">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Instructions</label>
+                    <textarea class="form-textarea" name="examInstructions" placeholder="Exam instructions for students..."></textarea>
+                </div>
+
+                <!-- Question Builder -->
+                <div class="question-builder">
+                    <h3 style="margin-bottom: 1rem;">Exam Questions</h3>
+                    <div id="questionsContainer">
+                        <!-- Questions will be dynamically added here -->
+                    </div>
+                    <button type="button" class="add-question-btn" onclick="addQuestion()">
+                        + Add Question
+                    </button>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="button" class="btn-secondary" onclick="resetExamForm()">
+                        Reset Form
+                    </button>
+                    <button type="submit" class="submit-btn">
+                        Create Exam
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Homework Modal -->
+    <div id="createHomeworkModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Assign Homework</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <form onsubmit="submitHomeworkForm(event)">
+                <div class="form-group">
+                    <label class="form-label">Homework Title</label>
+                    <input type="text" class="form-input" name="homeworkTitle" required placeholder="e.g., Algebra Problem Set #2">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Class</label>
+                    <select class="form-select" name="homeworkClass" required>
+                        <option value="">Choose a class</option>
+                        <option value="grade10_math">Grade 10 Mathematics</option>
+                        <option value="grade11_math">Grade 11 Mathematics</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Due Date</label>
+                    <input type="datetime-local" class="form-input" name="homeworkDueDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Instructions</label>
+                    <textarea class="form-textarea" name="homeworkInstructions" placeholder="Homework instructions and requirements..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Total Points</label>
+                    <input type="number" class="form-input" name="homeworkPoints" required min="1" max="100" value="10">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Homework File (PDF/Image)</label>
+                    <div class="file-upload-area" id="homeworkUploadArea" onclick="document.getElementById('homeworkFile').click()">
+                        <div class="upload-icon">📎</div>
+                        <p>Click to upload homework file (PDF, JPG, PNG)</p>
+                        <input type="file" id="homeworkFile" class="file-input" onchange="handleFileUpload('homeworkFile', 'homeworkUploadArea')" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Assign Homework</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Worksheet Modal -->
+    <div id="createWorksheetModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create Worksheet</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <form onsubmit="submitWorksheetForm(event)">
+                <div class="form-group">
+                    <label class="form-label">Worksheet Title</label>
+                    <input type="text" class="form-input" name="worksheetTitle" required placeholder="e.g., Geometry Practice Problems">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Class</label>
+                    <select class="form-select" name="worksheetClass" required>
+                        <option value="">Choose a class</option>
+                        <option value="grade10_math">Grade 10 Mathematics</option>
+                        <option value="grade11_math">Grade 11 Mathematics</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" name="worksheetDescription" placeholder="Worksheet description and learning objectives..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Worksheet File (PDF/Image)</label>
+                    <div class="file-upload-area" id="worksheetUploadArea" onclick="document.getElementById('worksheetFile').click()">
+                        <div class="upload-icon">📄</div>
+                        <p>Click to upload worksheet file (PDF, JPG, PNG)</p>
+                        <input type="file" id="worksheetFile" class="file-input" onchange="handleFileUpload('worksheetFile', 'worksheetUploadArea')" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Create Worksheet</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Notes Modal -->
+    <div id="addNotesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Study Notes</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <form onsubmit="submitNotesForm(event)">
+                <div class="form-group">
+                    <label class="form-label">Notes Title</label>
+                    <input type="text" class="form-input" name="notesTitle" required placeholder="e.g., Chapter 3: Calculus Fundamentals">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Class</label>
+                    <select class="form-select" name="notesClass" required>
+                        <option value="">Choose a class</option>
+                        <option value="grade10_math">Grade 10 Mathematics</option>
+                        <option value="grade11_math">Grade 11 Mathematics</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-textarea" name="notesDescription" placeholder="Brief description of the notes content..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Upload Notes File (PDF/Image)</label>
+                    <div class="file-upload-area" id="notesUploadArea" onclick="document.getElementById('notesFile').click()">
+                        <div class="upload-icon">📖</div>
+                        <p>Click to upload notes file (PDF, JPG, PNG)</p>
+                        <input type="file" id="notesFile" class="file-input" onchange="handleFileUpload('notesFile', 'notesUploadArea')" accept=".pdf,.jpg,.jpeg,.png" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Upload Notes</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Grading System Modal -->
+    <div id="gradingSystemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Grading System</h2>
+                <span class="close-btn">&times;</span>
+            </div>
+            <div id="gradingContainer">
+                <!-- Grading content will be loaded here -->
+            </div>
+        </div>
+    </div>
+</body>
+</html>

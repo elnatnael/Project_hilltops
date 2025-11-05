@@ -1,124 +1,329 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hilltops Academy</title>
-  <link rel="stylesheet" href="/Public/css/styles.css">
-  
+  <link rel="stylesheet" href="/Public/css/styles.css" />
 </head>
-<body >
+<body>
   <script src="/Public/js/main.js" defer></script>
+
+  <!-- HEADER -->
   <header>
     <div class="header-container">
       <div class="logo-container">
-        <img src="/Public/images/Screenshot_2025-10-20_at_3.04.19_PM-removebg-preview.png" alt="Hilltops Academy Logo" class="logo">
+        <img
+          src="/Public/images/Screenshot_2025-10-20_at_3.04.19_PM-removebg-preview.png"
+          alt="Hilltops Academy Logo"
+          class="logo"
+        />
       </div>
-      
-      <!-- Use checkbox for pure CSS toggle -->
-      <input type="checkbox" id="menuToggle" class="menu-toggle">
+
+      <!-- Hamburger Menu -->
+      <input type="checkbox" id="menuToggle" class="menu-toggle" />
       <label for="menuToggle" class="hamburger-menu">
         <span></span>
         <span></span>
         <span></span>
       </label>
-      
+
+      <!-- Navigation Links -->
       <div class="nav-links">
         <a href="/Frontend/index.html">Home</a>
-        <a href="/Frontend/about_us.html">About us</a>
+        <a href="/Frontend/about_us.html">About Us</a>
         <div class="dropdown">
           <a href="#">Access Portal</a>
           <div class="dropdown-content">
-            <a href="#">Student Portal</a>
-            <a href="#">Staff Portal</a>
+            <a href="/Frontend/student-login.html">Student Portal</a>
+            <a href="/Frontend/staff-login.html">Staff Portal</a>
           </div>
         </div>
-        <a href="/Frontend/contact_us.html">contact us</a>
+        <a href="/Frontend/contact_us.html">Contact Us</a>
       </div>
     </div>
   </header>
 
+  <!-- HERO -->
   <main>
     <section class="hero-section">
-      <div class="hero-content  gradient-text">
+      <div class="hero-content gradient-text">
         <h1>Welcome to Hilltops Academy</h1>
         <p>Committed to Excellence in Education</p>
-        
       </div>
     </section>
-    
+
+    <!-- VISION & MISSION SLIDER -->
     <section class="vision-mission-slider">
-    <div class="slider-container">
-        <!-- Mission Slide - MUST have 'active' class -->
+      <div class="slider-container">
+        <!-- Mission -->
         <div class="slide mission-slide active">
-            <div class="slide-content">
-                <div class="slide-image" style="background-image: url('/Public/images/bg-image.png')"></div>
-                <div class="slide-text">
-                    <h2>Our Mission</h2>
-                    <p>At Hilltops Academy, we are committed to providing quality education and fostering a supportive learning environment for all our students.</p>
-                </div>
+          <div class="slide-content">
+            <div
+              class="slide-image"
+              style="background-image: url('/Public/images/bg-image.png')"
+            ></div>
+            <div class="slide-text">
+              <h2>Our Mission</h2>
+              <p>
+                At Hilltops Academy, we are committed to providing quality
+                education and fostering a supportive learning environment for
+                all our students.
+              </p>
             </div>
+          </div>
         </div>
-        
-        <!-- Vision Slide - NO 'active' class -->
+
+        <!-- Vision -->
         <div class="slide vision-slide">
-            <div class="slide-content">
-                <div class="slide-image" style="background-image: url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
-                <div class="slide-text">
-                    <h2>Our Vision</h2>
-                    <p>To empower students with a holistic, rigorous and international education for success and to build quality school that provide choices to increase educational opportunities.</p>
-                </div>
+          <div class="slide-content">
+            <div
+              class="slide-image"
+              style="background-image: url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?auto=format&fit=crop&w=500&q=80')"
+            ></div>
+            <div class="slide-text">
+              <h2>Our Vision</h2>
+              <p>
+                To empower students with a holistic, rigorous, and international
+                education for success and to build quality schools that provide
+                opportunities for growth.
+              </p>
             </div>
+          </div>
         </div>
-        
-        <!-- Values Slide - NO 'active' class -->
+
+        <!-- Values -->
         <div class="slide values-slide">
-            <div class="slide-content">
-                <div class="slide-image" style="background-image: url('https://images.unsplash.com/photo-1541336032412-2048a678540d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80')"></div>
-                <div class="slide-text">
-                    <h2>Our Values</h2>
-                    <p>Integrity, respect, and collaboration are at the heart of Hilltops Academy. We cultivate a community that values diversity and encourages students to express their unique perspectives.</p>
-                </div>
+          <div class="slide-content">
+            <div
+              class="slide-image"
+              style="background-image: url('https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=500&q=80')"
+            ></div>
+            <div class="slide-text">
+              <h2>Our Values</h2>
+              <p>
+                Integrity, respect, and collaboration are at the heart of
+                Hilltops Academy. We cultivate a community that values diversity
+                and encourages students to express their unique perspectives.
+              </p>
             </div>
+          </div>
         </div>
-    </div>
-    
-    <!-- Navigation Arrows -->
-    <div class="slider-nav">
+      </div>
+
+      <!-- Slider Controls -->
+      <div class="slider-nav">
         <button class="slider-arrow prev">←</button>
         <button class="slider-arrow next">→</button>
-    </div>
-    
-    <!-- Indicators -->
-    <div class="slider-controls">
+      </div>
+
+      <div class="slider-controls">
         <div class="slide-indicators">
-            <button class="indicator active" data-slide="0"></button>
-            <button class="indicator" data-slide="1"></button>
-            <button class="indicator" data-slide="2"></button>
+          <button class="indicator active" data-slide="0"></button>
+          <button class="indicator" data-slide="1"></button>
+          <button class="indicator" data-slide="2"></button>
         </div>
-    </div>
-</section> <!-- REMOVE THE EXTRA </section> TAG THAT WAS HERE -->
-    <section class ="qualities_of_our_students">
+      </div>
+    </section>
+
+    <!-- QUALITIES -->
+    <section class="qualities_of_our_students">
       <h2>Qualities of Our Students</h2>
       <div class="qualities-list">
         <div class="quality-item">
-          <h3>CRITICAL-THINKERS</h3>
-          <p>Our students exercise initiative in applying thinking skills critically and creatively to make sound decisions and solve complex problems.</p>
+          <h3>Critical Thinkers</h3>
+          <p>
+            Our students exercise initiative in applying thinking skills
+            critically and creatively to make sound decisions and solve complex
+            problems.
+          </p>
         </div>
         <div class="quality-item">
-          <h3>COMMUNICATORS</h3>
-          <p>They receive and express ideas and information confidently in more than one language, including the language of mathematic cal symbols.</p>
+          <h3>Communicators</h3>
+          <p>
+            They express ideas confidently in more than one language, including
+            the language of mathematical symbols.
+          </p>
         </div>
         <div class="quality-item">
-          <h3>RISK – TAKERS</h3>
-          <p>They approach unfamiliar situations without anxiety and have the confidence and independence of spirit to explore new roles, ideas and strategies. They are courageous and articulate in defending those things in which they believe.</p>
+          <h3>Risk-Takers</h3>
+          <p>
+            They approach unfamiliar situations without anxiety and have the
+            confidence to explore new roles, ideas, and strategies.
+          </p>
         </div>
         <div class="quality-item">
-          <h3>OPEN MINDED</h3>
-          <p>They respect the views, values and traditions of other individuals and cultures, and are accustomed to seeking and considering a range of points of view.</p>
+          <h3>Open Minded</h3>
+          <p>
+            They respect the views, values, and traditions of other individuals
+            and cultures, considering a range of points of view.
+          </p>
         </div>
       </div>
     </section>
+
+    <!-- NEWS SECTION -->
+        <!-- NEWS SECTION -->
+    <section class="news-section">
+      <div class="news-container">
+        <h2>Latest News & Announcements</h2>
+        
+        <div class="news-carousel">
+          <div class="news-track">
+            <!-- News Item 1 -->
+            <article class="news-slide active">
+              <div class="news-date">
+                <span class="news-day">25</span>
+                <span class="news-month">NOV</span>
+                <span class="news-year">2024</span>
+              </div>
+              <div class="news-content">
+                <h3 class="news-title">New STEM Lab Opening</h3>
+                <p class="news-excerpt">
+                  We're excited to announce the opening of our state-of-the-art STEM laboratory, 
+                  equipped with the latest technology for hands-on learning experiences.
+                </p>
+                <div class="news-meta">
+                  <span class="news-category">Facilities</span>
+                  <span class="news-read-time">2 min read</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- News Item 2 -->
+            <article class="news-slide">
+              <div class="news-date">
+                <span class="news-day">18</span>
+                <span class="news-month">NOV</span>
+                <span class="news-year">2024</span>
+              </div>
+              <div class="news-content">
+                <h3 class="news-title">Academic Excellence Awards</h3>
+                <p class="news-excerpt">
+                  Congratulations to our students who achieved outstanding results in the 
+                  national academic competitions. Read about their achievements and success stories.
+                </p>
+                <div class="news-meta">
+                  <span class="news-category">Achievements</span>
+                  <span class="news-read-time">3 min read</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- News Item 3 -->
+            <article class="news-slide">
+              <div class="news-date">
+                <span class="news-day">10</span>
+                <span class="news-month">NOV</span>
+                <span class="news-year">2024</span>
+              </div>
+              <div class="news-content">
+                <h3 class="news-title">Community Service Initiative</h3>
+                <p class="news-excerpt">
+                  Our students are participating in a month-long community service project 
+                  to support local charities and make a positive impact in our community.
+                </p>
+                <div class="news-meta">
+                  <span class="news-category">Community</span>
+                  <span class="news-read-time">2 min read</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- News Item 4 -->
+            <article class="news-slide">
+              <div class="news-date">
+                <span class="news-day">05</span>
+                <span class="news-month">NOV</span>
+                <span class="news-year">2024</span>
+              </div>
+              <div class="news-content">
+                <h3 class="news-title">Parent Workshop Series</h3>
+                <p class="news-excerpt">
+                  Join us for our upcoming parent workshops focusing on digital literacy 
+                  and supporting your child's educational journey in the modern age.
+                </p>
+                <div class="news-meta">
+                  <span class="news-category">Workshops</span>
+                  <span class="news-read-time">4 min read</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- News Item 5 -->
+            <article class="news-slide">
+              <div class="news-date">
+                <span class="news-day">28</span>
+                <span class="news-month">OCT</span>
+                <span class="news-year">2024</span>
+              </div>
+              <div class="news-content">
+                <h3 class="news-title">Sports Team Championships</h3>
+                <p class="news-excerpt">
+                  Our basketball and soccer teams have qualified for the regional championships. 
+                  Come support our athletes as they compete for the title!
+                </p>
+                <div class="news-meta">
+                  <span class="news-category">Sports</span>
+                  <span class="news-read-time">2 min read</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- News Item 6 -->
+            <article class="news-slide">
+              <div class="news-date">
+                <span class="news-day">15</span>
+                <span class="news-month">OCT</span>
+                <span class="news-year">2024</span>
+              </div>
+              <div class="news-content">
+                <h3 class="news-title">Library Expansion Complete</h3>
+                <p class="news-excerpt">
+                  Our newly expanded library is now open with over 5,000 new books and 
+                  dedicated study spaces for students of all grade levels.
+                </p>
+                <div class="news-meta">
+                  <span class="news-category">Facilities</span>
+                  <span class="news-read-time">3 min read</span>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Carousel Controls -->
+          <div class="carousel-controls">
+            <button class="carousel-prev" aria-label="Previous news">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            
+            <div class="carousel-indicators">
+              <button class="indicator active" data-slide="0"></button>
+              <button class="indicator" data-slide="1"></button>
+              <button class="indicator" data-slide="2"></button>
+              <button class="indicator" data-slide="3"></button>
+              <button class="indicator" data-slide="4"></button>
+              <button class="indicator" data-slide="5"></button>
+            </div>
+            
+            <button class="carousel-next" aria-label="Next news">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- View More Button -->
+        <div class="news-actions">
+          <button class="view-more-btn">View All News & Announcements</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTS -->
     <section class="events-section">
       <h2>Upcoming Events</h2>
       <div class="events-container">
@@ -129,12 +334,14 @@
           </div>
           <div class="event-details">
             <h3 class="event-title">Annual Science Fair</h3>
-            <p class="event-description">Showcasing innovative projects from our talented students across all grade levels.</p>
+            <p class="event-description">
+              Showcasing innovative projects from our talented students.
+            </p>
             <span class="event-time">⏰ 9:00 AM - 3:00 PM</span>
             <span class="event-location">📍 School Auditorium</span>
           </div>
         </div>
-        
+
         <div class="event-card">
           <div class="event-date">
             <span class="event-day">20</span>
@@ -142,12 +349,15 @@
           </div>
           <div class="event-details">
             <h3 class="event-title">Winter Concert</h3>
-            <p class="event-description">Join us for an evening of musical performances by our school band and choir.</p>
+            <p class="event-description">
+              Join us for an evening of musical performances by our band and
+              choir.
+            </p>
             <span class="event-time">⏰ 6:00 PM - 8:00 PM</span>
             <span class="event-location">📍 Main Hall</span>
           </div>
         </div>
-        
+
         <div class="event-card">
           <div class="event-date">
             <span class="event-day">08</span>
@@ -155,14 +365,18 @@
           </div>
           <div class="event-details">
             <h3 class="event-title">Parent-Teacher Conference</h3>
-            <p class="event-description">Opportunity for parents to meet with teachers and discuss student progress.</p>
+            <p class="event-description">
+              Meet teachers and discuss student progress.
+            </p>
             <span class="event-time">⏰ 1:00 PM - 6:00 PM</span>
-            <span class="event-location">📍 Various Classrooms</span>
+            <span class="event-location">📍 Classrooms</span>
           </div>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- FOOTER -->
   <footer>
     <div class="footer-container">
       <p>&copy; 2024 Hilltops Academy. All rights reserved.</p>
@@ -170,11 +384,12 @@
         <a href="#">Facebook</a>
         <a href="#">Twitter</a>
         <a href="#">Instagram</a>
-        <a href="mailto:hilltopsacademy@yahoo.com" class="email-link">hilltopsacademy@yahoo.com</a>
+        <a href="mailto:hilltopsacademy@yahoo.com" class="email-link">
+          hilltopsacademy@yahoo.com
+        </a>
         <a href="tel:+251-930-07-71-27" class="phone-link">+251-930-07-71-27</a>
       </div>
     </div>
   </footer>
-    
 </body>
 </html>
